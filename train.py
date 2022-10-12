@@ -568,7 +568,7 @@ if __name__ == '__main__':
     #if opt.global_rank in [-1, 0]:
     #    check_git_status()
     #    check_requirements()
-
+    
     # Resume
     wandb_run = check_wandb_resume(opt)
     if opt.resume and not wandb_run:  # resume an interrupted run
@@ -587,6 +587,7 @@ if __name__ == '__main__':
         opt.name = 'evolve' if opt.evolve else opt.name
         opt.save_dir = increment_path(Path(opt.project) / opt.name, exist_ok=opt.exist_ok | opt.evolve)  # increment run
 
+    opt.local_rank = opt.global_rank
     # DDP mode
     opt.total_batch_size = opt.batch_size
     device = select_device(opt.device, batch_size=opt.batch_size)
